@@ -5,20 +5,41 @@
  * This runs during the build process to create a static JSON file with blog posts
  */
 
-import { writeFileSync, mkdirSync } from 'fs';
+import { writeFileSync, mkdirSync, readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { Client } from '@notionhq/client';
 import dotenv from 'dotenv';
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 // Load environment variables from .env.local (works locally, gracefully fails in production)
 try {
-  dotenv.config({ path: '.env.local' });
+  const envPath = join(__dirname, '../.env.local');
+  console.log('🔍 Loading environment from:', envPath);
+  
+  // Check if file exists
+  const envContent = readFileSync(envPath, 'utf8');
+  console.log('📄 .env.local content found, parsing...');
+  
+  // Parse manually as backup
+  const lines = envContent.split('\n');
+  for (const line of lines) {
+    if (line.trim() && !line.startsWith('#')) {
+      const [key, ...valueParts] = line.split('=');
+      if (key && valueParts.length > 0) {
+        const value = valueParts.join('=').trim();
+        process.env[key.trim()] = value;
+      }
+    }
+  }
+  
+  dotenv.config({ path: envPath });
+  console.log('✅ Environment variables loaded');
 } catch (error) {
+  console.log('❌ Error loading .env.local:', error.message);
   console.log('Using environment variables (production mode)');
 }
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Sample blog posts - replace with actual Notion API call when configured
 const sampleBlogPosts = [
@@ -150,12 +171,19 @@ async function generateBlogData() {
     const publicDir = join(__dirname, '../public');
     mkdirSync(publicDir, { recursive: true });
     
+    // Debug environment variables
+    console.log('🔍 Environment variables check:');
+    console.log('- VITE_NOTION_TOKEN:', process.env.VITE_NOTION_TOKEN ? '✅ Set' : '❌ Missing');
+    console.log('- VITE_NOTION_DATABASE_ID:', process.env.VITE_NOTION_DATABASE_ID ? '✅ Set' : '❌ Missing');
+    console.log('- VITE_USE_NOTION:', process.env.VITE_USE_NOTION);
+    
     // Fetch posts from Notion or use sample data
     let posts;
     if (process.env.VITE_NOTION_TOKEN && process.env.VITE_NOTION_DATABASE_ID && process.env.VITE_USE_NOTION === 'true') {
       posts = await fetchFromNotion();
     } else {
       console.log('🔄 Using sample blog data (Notion not configured or disabled)');
+      console.log('📝 Reason: Missing token, database ID, or USE_NOTION not set to "true"');
       posts = sampleBlogPosts;
     }
     
