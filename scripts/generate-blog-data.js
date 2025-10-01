@@ -11,8 +11,12 @@ import { fileURLToPath } from 'url';
 import { Client } from '@notionhq/client';
 import dotenv from 'dotenv';
 
-// Load environment variables from .env.local
-dotenv.config({ path: '.env.local' });
+// Load environment variables from .env.local (works locally, gracefully fails in production)
+try {
+  dotenv.config({ path: '.env.local' });
+} catch (error) {
+  console.log('Using environment variables (production mode)');
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
