@@ -13,32 +13,34 @@ import dotenv from 'dotenv';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// Load environment variables from .env.local (works locally, gracefully fails in production)
-try {
-  const envPath = join(__dirname, '../.env.local');
-  console.log('🔍 Loading environment from:', envPath);
-  
-  // Check if file exists
-  const envContent = readFileSync(envPath, 'utf8');
-  console.log('📄 .env.local content found, parsing...');
-  
-  // Parse manually as backup
-  const lines = envContent.split('\n');
-  for (const line of lines) {
-    if (line.trim() && !line.startsWith('#')) {
-      const [key, ...valueParts] = line.split('=');
-      if (key && valueParts.length > 0) {
-        const value = valueParts.join('=').trim();
-        process.env[key.trim()] = value;
+// Load environment variables - prioritize existing env vars, fallback to .env.local
+if (!process.env.VITE_NOTION_TOKEN || !process.env.VITE_NOTION_DATABASE_ID) {
+  console.log('🔍 Environment variables not found, trying .env.local file...');
+  try {
+    const envPath = join(__dirname, '../.env.local');
+    const envContent = readFileSync(envPath, 'utf8');
+    console.log('📄 .env.local found, loading variables...');
+    
+    // Parse .env.local manually
+    const lines = envContent.split('\n');
+    for (const line of lines) {
+      if (line.trim() && !line.startsWith('#')) {
+        const [key, ...valueParts] = line.split('=');
+        if (key && valueParts.length > 0) {
+          const value = valueParts.join('=').trim();
+          // Only set if not already in environment
+          if (!process.env[key.trim()]) {
+            process.env[key.trim()] = value;
+          }
+        }
       }
     }
+    console.log('✅ Local environment variables loaded');
+  } catch (error) {
+    console.log('⚡ No .env.local file found - using environment variables only');
   }
-  
-  dotenv.config({ path: envPath });
-  console.log('✅ Environment variables loaded');
-} catch (error) {
-  console.log('❌ Error loading .env.local:', error.message);
-  console.log('Using environment variables (production mode)');
+} else {
+  console.log('✅ Using environment variables (production mode)');
 }
 
 // Sample blog posts - replace with actual Notion API call when configured
@@ -175,7 +177,13 @@ async function generateBlogData() {
     console.log('🔍 Environment variables check:');
     console.log('- VITE_NOTION_TOKEN:', process.env.VITE_NOTION_TOKEN ? '✅ Set' : '❌ Missing');
     console.log('- VITE_NOTION_DATABASE_ID:', process.env.VITE_NOTION_DATABASE_ID ? '✅ Set' : '❌ Missing');
-    console.log('- VITE_USE_NOTION:', process.env.VITE_USE_NOTION);
+    console.log('- VITE_USE_NOTION:', process.env.VITE_USE_NOTION || 'not set');
+    
+    if (!process.env.VITE_NOTION_TOKEN || !process.env.VITE_NOTION_DATABASE_ID) {
+      console.log('📝 To use Notion integration in production, add these as GitHub repository secrets:');
+      console.log('   - NOTION_TOKEN');  
+      console.log('   - NOTION_DATABASE_ID');
+    }
     
     // Fetch posts from Notion or use sample data
     let posts;
