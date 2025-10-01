@@ -15,4 +15,7 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // For GitHub Pages user site (username.github.io), base should be '/'
+  // For project sites (username.github.io/project-name), base should be '/project-name/'
+  base: '/'
 }));
