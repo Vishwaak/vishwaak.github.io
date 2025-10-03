@@ -2,46 +2,25 @@ import { Card } from "@/components/ui/card";
 
 const poems = [
   {
-    title: "Digital Dreams",
+    title: "Mother Tongue",
     date: "2024",
-    excerpt: "In lines of code, a world takes form,\nWhere logic dances with the storm...",
-    content: `In lines of code, a world takes form,
-Where logic dances with the storm.
-Each function calls, each loop returns,
-The fire of creation burns.
-
-Between the zeros and the ones,
-A universe where nothing runs
-But pure potential, crystallized
-In syntax beautiful and wise.`,
-  },
-  {
-    title: "Minimalist Manifesto",
-    date: "2024",
-    excerpt: "Less is the language of the soul,\nSimplicity, the highest goal...",
-    content: `Less is the language of the soul,
-Simplicity, the highest goal.
-In empty space, the mind can breathe,
-In clean design, the heart perceives.
-
-No ornament, no excess weight,
-Just essence, pure and intimate.
-The strongest voice is often still—
-White space, black type, and iron will.`,
-  },
-  {
-    title: "The Algorithm of Being",
-    date: "2023",
-    excerpt: "We are patterns seeking patterns,\nCode that writes itself in time...",
-    content: `We are patterns seeking patterns,
-Code that writes itself in time.
-Recursive loops of consciousness,
-Self-referential, sublime.
-
-Each thought a function, each emotion
-A variable that changes state.
-We debug our existence daily,
-Refactor love, compile our fate.`,
+    excerpt: "Talks about his love for another language",
+    content: `
+I loved you enough
+To learn the cadence of your mother tongue,
+I practiced the vowels and consonants,
+To sound as close to you as I could.
+But instead of falling in love with you,
+I cheated on you.
+I fell deeper for the rhyme of the language,
+For its rhythm, it's song.
+My heart grew wild for poems and phrases,
+But not for you.
+You dare not say you love me back—
+Now it’s too late.
+Your silence stretched like an endless shadow,
+But at least your language still speaks to me.
+`,
   },
 ];
 

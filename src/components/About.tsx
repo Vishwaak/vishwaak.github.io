@@ -23,7 +23,7 @@ const About = () => {
               the way I explore the rhythm of algorithms.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              With a background in full-stack development and a passion for minimalist design, 
+              With a background in Computer Vision and a passion for minimalist design, 
               I create experiences that are both functional and memorable.
             </p>
           </div>
@@ -46,7 +46,7 @@ const About = () => {
               className="gap-2 hover:bg-accent transition-colors"
               asChild
             >
-              <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/vishwaak" target="_blank" rel="noopener noreferrer">
                 <Github size={18} />
                 GitHub
               </a>
@@ -57,7 +57,7 @@ const About = () => {
               className="gap-2 hover:bg-accent transition-colors"
               asChild
             >
-              <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.linkedin.com/in/vishwaak-chandran/" target="_blank" rel="noopener noreferrer">
                 <Linkedin size={18} />
                 LinkedIn
               </a>
@@ -68,7 +68,7 @@ const About = () => {
               className="gap-2 hover:bg-accent transition-colors"
               asChild
             >
-              <a href="mailto:your.email@example.com">
+              <a href="mailto:chandranvishwaak@gmail.com">
                 <Mail size={18} />
                 Email
               </a>
