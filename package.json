@@ -1,17 +1,18 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "vishwaak-portfolio",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run generate-blog-data && vite build",
-    "build:dev": "npm run generate-blog-data && vite build --mode development",
+    "build": "npm run generate-blog-data && npm run generate-poems-data && vite build",
+    "build:dev": "npm run generate-blog-data && npm run generate-poems-data && vite build --mode development",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate-blog-data": "node scripts/generate-blog-data.js"
+    "generate-blog-data": "node scripts/generate-blog-data.js",
+    "generate-poems-data": "node scripts/generate-poems-data.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

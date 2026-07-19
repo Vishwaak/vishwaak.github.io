@@ -41,6 +41,7 @@ jobs:
         env:
           VITE_NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           VITE_NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          VITE_NOTION_POEMS_DATABASE_ID: ${{ secrets.NOTION_POEMS_DATABASE_ID }}
           VITE_USE_NOTION: 'true'
         run: npm run build
 

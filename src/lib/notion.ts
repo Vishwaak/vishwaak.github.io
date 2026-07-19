@@ -126,3 +126,51 @@ export async function getBlogPost(id: string): Promise<BlogPost | null> {
     return null;
   }
 }
+
+export interface Poem {
+  id: string;
+  title: string;
+  date: string;
+  excerpt: string;
+  content: string;
+  slug: string;
+  published?: boolean;
+}
+
+const samplePoems: Poem[] = [
+  {
+    id: "1",
+    title: "Mother Tongue",
+    date: "2024-01-01",
+    excerpt: "Talks about his love for another language",
+    content: `I loved you enough
+To learn the cadence of your mother tongue,
+I practiced the vowels and consonants,
+To sound as close to you as I could.
+But instead of falling in love with you,
+I cheated on you.
+I fell deeper for the rhyme of the language,
+For its rhythm, it's song.
+My heart grew wild for poems and phrases,
+But not for you.
+You dare not say you love me back—
+Now it's too late.
+Your silence stretched like an endless shadow,
+But at least your language still speaks to me.`,
+    slug: "mother-tongue",
+    published: true,
+  },
+];
+
+export async function getPoems(): Promise<Poem[]> {
+  try {
+    const response = await fetch('/poems-data.json');
+    if (response.ok) {
+      return await response.json();
+    }
+  } catch (error) {
+    console.log('No static poems data found, using sample data');
+  }
+
+  return samplePoems;
+}

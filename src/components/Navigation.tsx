@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,17 +17,20 @@ const Navigation = () => {
   }, []);
 
   const scrollToSection = (sectionId: string) => {
+    setIsMobileMenuOpen(false);
+    if (location.pathname !== "/") {
+      navigate("/", { state: { scrollTo: sectionId } });
+      return;
+    }
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
-      setIsMobileMenuOpen(false);
     }
   };
 
-  const navLinks = [
+  const sectionLinks = [
     { id: "about", label: "About" },
     { id: "projects", label: "Projects" },
-    { id: "poems", label: "Poems" },
     { id: "blog", label: "Blog" },
   ];
 
@@ -45,7 +51,7 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {sectionLinks.map((link) => (
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
@@ -54,6 +60,13 @@ const Navigation = () => {
                 {link.label}
               </button>
             ))}
+            <Link
+              to="/poems"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="text-sm font-medium link-underline hover:opacity-70 transition-opacity"
+            >
+              Poems
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -70,7 +83,7 @@ const Navigation = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden mt-4 pb-4 border-t border-border pt-4 animate-fade-in">
             <div className="flex flex-col gap-4">
-              {navLinks.map((link) => (
+              {sectionLinks.map((link) => (
                 <button
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
@@ -79,6 +92,13 @@ const Navigation = () => {
                   {link.label}
                 </button>
               ))}
+              <Link
+                to="/poems"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-left text-sm font-medium hover:opacity-70 transition-opacity"
+              >
+                Poems
+              </Link>
             </div>
           </div>
         )}

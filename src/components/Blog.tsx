@@ -88,31 +88,6 @@ const Blog = () => {
             ))}
           </div>
         )}
-
-        <div className="mt-12 p-6 border border-border rounded-lg bg-muted/30">
-          <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
-            <ExternalLink size={18} />
-            Notion Integration Ready
-          </h3>
-          <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
-            <p>
-              Your blog is now connected to Notion! Currently showing sample data.
-            </p>
-            <div className="bg-background/50 p-4 rounded border">
-              <p className="font-medium text-foreground mb-2">To connect your real Notion database:</p>
-              <ol className="list-decimal list-inside space-y-1">
-                <li>Create a Notion integration at <a href="https://www.notion.so/my-integrations" target="_blank" rel="noopener noreferrer" className="link-underline">notion.so/my-integrations</a></li>
-                <li>Copy the Internal Integration Token</li>
-                <li>Create a database with these properties: Title (title), Excerpt (text), Date (date), Published (checkbox), Tags (multi-select), Slug (text)</li>
-                <li>Share your database with the integration</li>
-                <li>Add environment variables: NOTION_TOKEN and NOTION_DATABASE_ID</li>
-              </ol>
-            </div>
-            <p>
-              For static deployment, use GitHub Actions to rebuild when posts are published.
-            </p>
-          </div>
-        </div>
       </div>
     </section>
   );
