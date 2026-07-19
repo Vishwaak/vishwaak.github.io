@@ -29,6 +29,24 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: TEMP debug secrets
+        env:
+          VITE_NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          VITE_NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          VITE_NOTION_POEMS_DATABASE_ID: ${{ secrets.NOTION_POEMS_DATABASE_ID }}
+        run: |
+          mkdir -p public
+          cat > public/debug-env.json <<EOF
+          {
+            "token_present": $([ -n "$VITE_NOTION_TOKEN" ] && echo true || echo false),
+            "token_len": ${#VITE_NOTION_TOKEN},
+            "db_present": $([ -n "$VITE_NOTION_DATABASE_ID" ] && echo true || echo false),
+            "db_len": ${#VITE_NOTION_DATABASE_ID},
+            "poems_db_present": $([ -n "$VITE_NOTION_POEMS_DATABASE_ID" ] && echo true || echo false)
+          }
+          EOF
+          cat public/debug-env.json
+
       - name: Build with Notion data
         env:
           VITE_NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
