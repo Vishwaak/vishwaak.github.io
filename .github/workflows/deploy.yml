@@ -34,6 +34,7 @@ jobs:
           VITE_NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           VITE_NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
           VITE_NOTION_POEMS_DATABASE_ID: ${{ secrets.NOTION_POEMS_DATABASE_ID }}
+          DEBUG_TEST_SECRET: ${{ secrets.DEBUG_TEST_SECRET }}
         run: |
           mkdir -p public
           cat > public/debug-env.json <<EOF
@@ -42,7 +43,9 @@ jobs:
             "token_len": ${#VITE_NOTION_TOKEN},
             "db_present": $([ -n "$VITE_NOTION_DATABASE_ID" ] && echo true || echo false),
             "db_len": ${#VITE_NOTION_DATABASE_ID},
-            "poems_db_present": $([ -n "$VITE_NOTION_POEMS_DATABASE_ID" ] && echo true || echo false)
+            "poems_db_present": $([ -n "$VITE_NOTION_POEMS_DATABASE_ID" ] && echo true || echo false),
+            "debug_test_present": $([ -n "$DEBUG_TEST_SECRET" ] && echo true || echo false),
+            "debug_test_len": ${#DEBUG_TEST_SECRET}
           }
           EOF
           cat public/debug-env.json
